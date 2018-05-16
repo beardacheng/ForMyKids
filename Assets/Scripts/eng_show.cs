@@ -4,12 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class eng_show : MonoBehaviour {
-    Text _engText;
+    public Text _engText;
 
 	// Use this for initialization
 	void Start () {
-        this._engText = GetComponentInChildren<Text>();
-	}
+        gameObject.SetActive(false);
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -17,11 +17,11 @@ public class eng_show : MonoBehaviour {
 	}
 
     public void ShowText(string content){
-        this._engText.text = content;
-        this.gameObject.transform.SetAsLastSibling();
+        _engText.text = content;
+        gameObject.SetActive(true);
     }
 
     public void HideText() {
-        this.gameObject.transform.SetAsFirstSibling();
+        gameObject.SetActive(false);
     }
 }

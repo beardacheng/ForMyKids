@@ -19,6 +19,8 @@ public class sprite_full_screen : MonoBehaviour {
         _mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
         _screenHeight = _mainCamera.orthographicSize * 2;
 
+        transform.position = new Vector3(0, 0, transform.position.z);
+
         _SetScale();   
     }
 

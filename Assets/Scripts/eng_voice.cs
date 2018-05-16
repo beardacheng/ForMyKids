@@ -22,15 +22,22 @@ public class eng_voice : MonoBehaviour {
 
     IEnumerator Start()
     {
-        this._audioSource = GetComponent<AudioSource>();
+        _init();
 
         //auto play
         if (this._audioSource.playOnAwake && this.sentence != "")
         {
             yield return this._PlayEng(this.sentence);
         }
+    }
 
-        this.OnAudioEnd += OnAudioEndEvent;
+    private void _init()
+    {
+        if (_audioSource == null)
+        {
+            _audioSource = GetComponent<AudioSource>();
+            OnAudioEnd += OnAudioEndEvent;
+        }
     }
 
     private void OnAudioEndEvent() {
@@ -39,6 +46,7 @@ public class eng_voice : MonoBehaviour {
 
     public void PlayEng(string content)
     {
+        _init();
         StartCoroutine(this._PlayEng(content));
     }
 
@@ -116,7 +124,7 @@ public class eng_voice : MonoBehaviour {
     } 
 
     public void StopPlay(){
-        this._audioSource.Stop();
-        if (this._engShow) this._engShow.HideText();
+        if (_audioSource) _audioSource.Stop();
+        if (_engShow) _engShow.HideText();
     }
 }

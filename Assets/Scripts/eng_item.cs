@@ -6,14 +6,14 @@ using UnityEngine.EventSystems;
 [RequireComponent(typeof(PolygonCollider2D))]
 public class eng_item : MonoBehaviour {
     public eng_voice speaker;
-    public bool speak_on_awake = false;
+    public bool speak_on_start = false;
 
     [Multiline]
     public string eng;
 
 	// Use this for initialization
 	void Start () {
-        speaker.PlayEng(eng);
+        if (speak_on_start) _PlayEng();
     }
 
     private void Awake()
@@ -26,10 +26,17 @@ public class eng_item : MonoBehaviour {
 		
 	}
 
+    private void _PlayEng()
+    {
+        speaker.PlayEng(eng);
+        speaker.OnAudioEnd += OnEngVoiceEnd;
+    }
+
 	void OnMouseUp()
 	{
-        speaker.OnAudioEnd += OnEngVoiceEnd;
-	}
+        _PlayEng();
+
+    }
 
     void OnEngVoiceEnd() {
 

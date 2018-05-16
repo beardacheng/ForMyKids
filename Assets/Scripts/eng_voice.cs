@@ -71,6 +71,7 @@ public class eng_voice : MonoBehaviour {
     }
 
     private IEnumerator _RequestAudioByWebRequest(string path) {
+        Debug.Log(path);
         using (var audio_clip_request = UnityWebRequestMultimedia.GetAudioClip(path, AudioType.MPEG))
         {
             yield return audio_clip_request.SendWebRequest();

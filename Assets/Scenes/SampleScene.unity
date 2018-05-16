@@ -191,7 +191,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speaker: {fileID: 683676389}
-  speak_on_awake: 0
+  speak_on_start: 0
   eng: 
 --- !u!60 &35679272
 PolygonCollider2D:
@@ -456,7 +456,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speaker: {fileID: 683676389}
-  speak_on_awake: 0
+  speak_on_start: 0
   eng: 
 --- !u!60 &444953532
 PolygonCollider2D:
@@ -1369,7 +1369,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speaker: {fileID: 683676389}
-  speak_on_awake: 0
+  speak_on_start: 0
   eng: 
 --- !u!60 &953431935
 PolygonCollider2D:
@@ -1656,7 +1656,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speaker: {fileID: 683676389}
-  speak_on_awake: 0
+  speak_on_start: 0
   eng: 
 --- !u!60 &1325355266
 PolygonCollider2D:
@@ -1765,7 +1765,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speaker: {fileID: 683676389}
-  speak_on_awake: 0
+  speak_on_start: 0
   eng: 
 --- !u!60 &1372475733
 PolygonCollider2D:
@@ -1964,13 +1964,13 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1477467047}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2c65c8ea2f4614b0a89a028aff049adf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speaker: {fileID: 754587999}
-  speak_on_awake: 1
+  speak_on_start: 1
   eng: What can you see in a market?
 --- !u!60 &1477467052
 PolygonCollider2D:
@@ -2449,7 +2449,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speaker: {fileID: 683676389}
-  speak_on_awake: 0
+  speak_on_start: 0
   eng: 
 --- !u!60 &1828565118
 PolygonCollider2D:
@@ -2642,7 +2642,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speaker: {fileID: 683676389}
-  speak_on_awake: 0
+  speak_on_start: 0
   eng: 
 --- !u!60 &2111665564
 PolygonCollider2D:

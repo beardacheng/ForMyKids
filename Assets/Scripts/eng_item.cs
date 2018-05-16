@@ -13,12 +13,12 @@ public class eng_item : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        
-	}
+        speaker.PlayEng(eng);
+    }
 
     private void Awake()
     {
-        speaker.PlayEng(eng);
+        
     }
 
     // Update is called once per frame

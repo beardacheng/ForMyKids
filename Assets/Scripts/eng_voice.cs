@@ -20,23 +20,18 @@ public class eng_voice : MonoBehaviour {
     //co
     Coroutine _playAudio;
 
+    private void Awake()
+    {
+        _audioSource = GetComponent<AudioSource>();
+        OnAudioEnd += OnAudioEndEvent;
+    }
+
     IEnumerator Start()
     {
-        _init();
-
         //auto play
         if (this._audioSource.playOnAwake && this.sentence != "")
         {
             yield return this._PlayEng(this.sentence);
-        }
-    }
-
-    private void _init()
-    {
-        if (_audioSource == null)
-        {
-            _audioSource = GetComponent<AudioSource>();
-            OnAudioEnd += OnAudioEndEvent;
         }
     }
 
@@ -46,7 +41,6 @@ public class eng_voice : MonoBehaviour {
 
     public void PlayEng(string content)
     {
-        _init();
         StartCoroutine(this._PlayEng(content));
     }
 

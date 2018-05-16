@@ -9,7 +9,7 @@ public class eng_voice : MonoBehaviour {
     [Multiline]
     public string sentence = "";
 
-    public eng_show _engShow = null; 
+    public eng_show _engShow = null;
 
     private AudioSource _audioSource = null;
 
@@ -21,7 +21,7 @@ public class eng_voice : MonoBehaviour {
     Coroutine _playAudio;
 
     IEnumerator Start()
-	{
+    {
         this._audioSource = GetComponent<AudioSource>();
 
         //auto play
@@ -31,10 +31,10 @@ public class eng_voice : MonoBehaviour {
         }
 
         this.OnAudioEnd += OnAudioEndEvent;
-	}
+    }
 
     private void OnAudioEndEvent() {
-        
+
     }
 
     public void PlayEng(string content)
@@ -57,7 +57,11 @@ public class eng_voice : MonoBehaviour {
         else this.sentence = content;
 
         var path = "https://fanyi.baidu.com/gettts?lan=en&text=" + sentence + "&spd=3";
+#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
+        yield return _RequestAudioByWebRequestInPC(path);
+#else
         yield return _RequestAudioByWebRequest(path);
+#endif
 
         if (audioSrouce.clip != null)
         {
@@ -82,6 +86,23 @@ public class eng_voice : MonoBehaviour {
             }
 
             this._audioSource.clip = DownloadHandlerAudioClip.GetContent(audio_clip_request);
+        }
+    }
+
+    private IEnumerator _RequestAudioByWebRequestInPC(string path)
+    {
+        Debug.Log(path);
+        using (var audio_clip_request = UnityWebRequest.Get(path))
+        {
+            yield return audio_clip_request.SendWebRequest();
+            if (audio_clip_request.isNetworkError || audio_clip_request.isHttpError)
+            {
+                Debug.LogError(audio_clip_request.error);
+                yield break;
+            }
+
+            this._audioSource.clip = NAudioPlayer.FromMp3Data(audio_clip_request.downloadHandler.data);
+
         }
     }
 

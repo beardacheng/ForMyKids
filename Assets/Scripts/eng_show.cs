@@ -9,7 +9,6 @@ public class eng_show : MonoBehaviour {
     // Use this for initialization
     private void Awake()
     {
-        enabled = false;
     }
 
     private void Start()
@@ -24,10 +23,10 @@ public class eng_show : MonoBehaviour {
 
     public void ShowText(string content){
         _engText.text = content;
-        enabled = true;
+        gameObject.SetActive(true);
     }
 
     public void HideText() {
-        enabled = false;
+        gameObject.SetActive(false);
     }
 }

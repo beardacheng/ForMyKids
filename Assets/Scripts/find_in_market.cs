@@ -21,6 +21,10 @@ public class find_in_market : MonoBehaviour {
             market.gameObject.SetActive(false);
         }
 
+        _FlushMarket();
+    }
+
+    private void _FlushMarket() {
         if (AtMarket) {
             AtMarket.ShowMarket();
         }
@@ -28,8 +32,8 @@ public class find_in_market : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+    
+    }
 
     public void NextMarket() 
     {

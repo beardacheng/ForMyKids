@@ -4,7 +4,7 @@ using System;
 using NAudio;
 using NAudio.Wave;
 
-public static class NAudioPlayer
+public static class NAudioPlayer 
 {
     public static AudioClip FromMp3Data( byte[] data)
     {
@@ -18,6 +18,7 @@ public static class NAudioPlayer
         //Debug.Log(wav);
         AudioClip audioClip = AudioClip.Create("testSound", wav.SampleCount, 1, wav.Frequency, false);
         audioClip.SetData(wav.LeftChannel, 0);
+
         // Return the clip
         return audioClip;
     }

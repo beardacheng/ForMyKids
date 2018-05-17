@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using System;
+using System.IO;
 
 [RequireComponent(typeof(AudioSource))]
 public class eng_voice : MonoBehaviour {
@@ -17,12 +19,16 @@ public class eng_voice : MonoBehaviour {
     public delegate void AudioCallBack();
     public event AudioCallBack OnAudioEnd;
 
+    //audio cache
+    private static LocalBinFileCache _cache;
+
     //co
     Coroutine _playAudio;
 
     private void Awake()
     {
         _audioSource = GetComponent<AudioSource>();
+        _cache = new LocalBinFileCache("audio_file_cache");
         OnAudioEnd += OnAudioEndEvent;
     }
 
@@ -54,19 +60,29 @@ public class eng_voice : MonoBehaviour {
 
         if (content == "")
         {
-            if (this.sentence == "") yield break;
+            if (sentence == "") yield break;
         }
-        else this.sentence = content;
+        else sentence = content;
 
-        var path = "https://fanyi.baidu.com/gettts?lan=en&text=" + sentence + "&spd=3";
+        string audioFilePath = _cache.GetFilePath(sentence);
+
+        if (audioFilePath == "") {
+            var path = "https://fanyi.baidu.com/gettts?lan=en&text=" + sentence + "&spd=3";
 #if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
-        yield return _RequestAudioByWebRequestInPC(path);
+            yield return _RequestAudioByWebRequestInPC(path);
 #else
-        yield return _RequestAudioByWebRequest(path);
+            yield return _RequestAudioByWebRequest(path);
 #endif
+        }
+        else {
+            yield return _RequestAudioByWebRequest("file://" + audioFilePath, AudioType.WAV);
+        }
 
-        if (audioSrouce.clip != null)
-        {
+        if (audioSrouce.clip != null) {
+            if ("" == audioFilePath) {
+                _cache.Save(sentence,  T_AudioClipToByteArray.AudioClipToByteArray(audioSrouce.clip) , false);
+            }
+
             if (this._engShow)
             {
                 this._engShow.ShowText(this.sentence);
@@ -76,13 +92,14 @@ public class eng_voice : MonoBehaviour {
         }
     }
 
-    private IEnumerator _RequestAudioByWebRequest(string path) {
+    private IEnumerator _RequestAudioByWebRequest(string path, AudioType type = AudioType.MPEG) {
         Debug.Log(path);
-        using (var audio_clip_request = UnityWebRequestMultimedia.GetAudioClip(path, AudioType.MPEG))
+        using (var audio_clip_request = UnityWebRequestMultimedia.GetAudioClip(path, type))
         {
             yield return audio_clip_request.SendWebRequest();
             if (audio_clip_request.isNetworkError || audio_clip_request.isHttpError)
             {
+                Debug.Log(path);
                 Debug.LogError(audio_clip_request.error);
                 yield break;
             }

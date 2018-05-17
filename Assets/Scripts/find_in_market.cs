@@ -49,10 +49,10 @@ public class find_in_market : MonoBehaviour {
 
         foreach (var m in markets)
         {
-            m.Hide();
+            string sortingLayerName = "DisabledMarket";
+            if (AtMarket == m) sortingLayerName = "EnabledMarket";
+            m.GetComponent<SpriteRenderer>().sortingLayerName = sortingLayerName;
         }
-
-        _FlushMarket();
     }
 
 #endif

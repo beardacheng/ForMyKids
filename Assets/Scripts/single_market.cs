@@ -12,12 +12,12 @@ public class single_market : MonoBehaviour {
     }
 
     private void Awake() {
+        gameObject.SetActive(false);
     }
 
 
     // Use this for initialization
     void Start () {
-        
     }
 	
 	// Update is called once per frame
@@ -26,10 +26,10 @@ public class single_market : MonoBehaviour {
 	}
 
     public void Show() {
-        _renderer.sortingLayerName = "ValidMarket";
+        gameObject.SetActive(true);
     }
 
     public void Hide() {
-        _renderer.sortingLayerName = "InvalidMarket";
+        gameObject.SetActive(false);
     }
 }

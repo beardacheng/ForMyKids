@@ -42,10 +42,10 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: InvalidMarket
+  - name: DisabledMarket
     uniqueID: 3162079125
     locked: 0
-  - name: ValidMarket
+  - name: EnabledMarket
     uniqueID: 2507715463
     locked: 0
   - name: HidedUI

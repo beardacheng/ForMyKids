@@ -3,20 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class single_market : MonoBehaviour {
-    private SpriteRenderer _renderer;
-    private SpriteRenderer spriteRenderer {
+    private SpriteRenderer __renderer;
+    private SpriteRenderer _renderer {
         get {
-            if (_renderer == null) _renderer = GetComponent<SpriteRenderer>();
-            return _renderer;
+            if (__renderer == null) __renderer = GetComponent<SpriteRenderer>();
+            return __renderer;
         }
     }
 
     private void Awake() {
-        _renderer = GetComponent<SpriteRenderer>();
     }
 
-    private void OnValidate() {
-    }
 
     // Use this for initialization
     void Start () {
@@ -29,10 +26,10 @@ public class single_market : MonoBehaviour {
 	}
 
     public void Show() {
-        spriteRenderer.sortingLayerName = "ValidMarket";
+        _renderer.sortingLayerName = "ValidMarket";
     }
 
     public void Hide() {
-        spriteRenderer.sortingLayerName = "InvalidMarket";
+        _renderer.sortingLayerName = "InvalidMarket";
     }
 }

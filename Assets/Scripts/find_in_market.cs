@@ -2,15 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[ExecuteInEditMode]
 public class find_in_market : MonoBehaviour {
     public single_market[] markets;
 
-    int _now = 0;
+    public int now = 0;
     public single_market AtMarket
     {
         get {
-            if (_now < 0) return null;
-            else return this.markets[_now];
+            if (now < 0) return null;
+            else return this.markets[now];
         }
     }
         
@@ -39,8 +40,22 @@ public class find_in_market : MonoBehaviour {
     {
         if (this.markets.Length == 0) return;
 
-        _now += 1;
-        if (_now >= this.markets.Length) _now = -1;
+        now += 1;
+        if (now >= this.markets.Length) now = -1;
         else this.AtMarket.ShowMarket();
     }
+
+#if UNITY_EDITOR
+    void OnValidate() {
+        if (now < 0 || now >= markets.Length) return;
+
+        foreach (var m in markets)
+        {
+            m.GetComponent<SpriteRenderer>().sortingOrder = (markets[now] == m ? 10 : 0);
+        }
+
+        _FlushMarket();
+    }
+
+#endif
 }

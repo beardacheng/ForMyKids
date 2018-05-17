@@ -9,7 +9,6 @@ public class LocalBinFileCache {
     string _saveFilePath;
 
     public LocalBinFileCache(string key) {
-        string _key = key;
 
         string tempFilePath;
 #if UNITY_EDITOR

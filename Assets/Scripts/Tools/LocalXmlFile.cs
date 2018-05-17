@@ -81,7 +81,7 @@ public class LocalXmlFile<DataType> {
     DataType DeserializeObject(string pXmlizedString) {
         XmlSerializer xs = new XmlSerializer(typeof(DataType));
         MemoryStream memoryStream = new MemoryStream(StringToUTF8ByteArray(pXmlizedString));
-        XmlTextWriter xmlTextWriter = new XmlTextWriter(memoryStream, Encoding.UTF8);
+        //XmlTextWriter xmlTextWriter = new XmlTextWriter(memoryStream, Encoding.UTF8);
         return (DataType)(xs.Deserialize(memoryStream));
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(PolygonCollider2D))]
 public class eng_item : MonoBehaviour {
-    private eng_voice _speaker;
+    protected eng_voice _speaker;
 
     [Multiline]
     public string eng;

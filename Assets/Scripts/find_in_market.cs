@@ -18,16 +18,12 @@ public class find_in_market : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        foreach (var market in markets) {
-            market.gameObject.SetActive(false);
-        }
-
         _FlushMarket();
     }
 
     private void _FlushMarket() {
         if (AtMarket) {
-            AtMarket.ShowMarket();
+            AtMarket.Show();
         }
     }
 	
@@ -40,9 +36,11 @@ public class find_in_market : MonoBehaviour {
     {
         if (this.markets.Length == 0) return;
 
+        if (AtMarket) AtMarket.Hide();
+
         now += 1;
         if (now >= this.markets.Length) now = -1;
-        else this.AtMarket.ShowMarket();
+        if (AtMarket) AtMarket.Show();
     }
 
 #if UNITY_EDITOR
@@ -51,7 +49,7 @@ public class find_in_market : MonoBehaviour {
 
         foreach (var m in markets)
         {
-            m.GetComponent<SpriteRenderer>().sortingOrder = (markets[now] == m ? 10 : 0);
+            m.Hide();
         }
 
         _FlushMarket();

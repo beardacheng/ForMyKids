@@ -42,7 +42,7 @@ public class eng_voice : MonoBehaviour {
     }
 
     private void OnAudioEndEvent() {
-
+        if (_engShow) _engShow.PlayEnd();
     }
 
     public void PlayEng(string content)
@@ -138,6 +138,10 @@ public class eng_voice : MonoBehaviour {
 
     public void StopPlay(){
         if (_audioSource) _audioSource.Stop();
+        HideText();
+    }
+
+    public void HideText() {
         if (_engShow) _engShow.HideText();
     }
 }

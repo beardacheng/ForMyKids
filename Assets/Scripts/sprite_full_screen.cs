@@ -5,8 +5,6 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 [ExecuteInEditMode]
 public class sprite_full_screen : MonoBehaviour {
-    private Camera _mainCamera;
-
     private float _screenHeight;
     private float _screenWidth;
     private Vector2 _orgSize;
@@ -16,8 +14,7 @@ public class sprite_full_screen : MonoBehaviour {
 	void Start () {
         var sprite = GetComponent<SpriteRenderer>().sprite;
         _orgSize = new Vector2(sprite.texture.width / sprite.pixelsPerUnit, sprite.texture.height / sprite.pixelsPerUnit);
-        _mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
-        _screenHeight = _mainCamera.orthographicSize * 2;
+        _screenHeight = Camera.main.orthographicSize * 2;
 
         transform.position = new Vector3(0, 0, transform.position.z);
 

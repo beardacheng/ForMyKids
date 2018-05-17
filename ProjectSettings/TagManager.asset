@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - MarketController
   layers:
   - Default
   - TransparentFX
@@ -40,4 +41,19 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: InvalidMarket
+    uniqueID: 3162079125
+    locked: 0
+  - name: ValidMarket
+    uniqueID: 2507715463
+    locked: 0
+  - name: HidedUI
+    uniqueID: 175339333
+    locked: 0
+  - name: BaseUI
+    uniqueID: 150612509
+    locked: 0
+  - name: FloatedUI
+    uniqueID: 3659025081
     locked: 0

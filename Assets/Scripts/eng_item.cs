@@ -5,41 +5,34 @@ using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(PolygonCollider2D))]
 public class eng_item : MonoBehaviour {
-    public eng_voice speaker;
-    public bool speak_on_start = false;
+    private eng_voice _speaker;
 
     [Multiline]
     public string eng;
 
-	// Use this for initialization
-	void Start () {
-        if (speak_on_start) _PlayEng();
-    }
-
-    private void Awake()
+    protected virtual void Start()
     {
-        
+        _speaker = FindSpeaker();
     }
 
-    // Update is called once per frame
-    void Update () {
-		
-	}
-
-    private void _PlayEng()
+    protected eng_voice FindSpeaker()
     {
-        speaker.PlayEng(eng);
-        speaker.OnAudioEnd += OnEngVoiceEnd;
+        return GameObject.Find("Eng Speaker").GetComponent<eng_voice>();
     }
 
-	void OnMouseUp()
+    protected void _PlayEng()
+    {
+        _speaker.PlayEng(eng);
+        _speaker.OnAudioEnd += OnEngVoiceEnd;
+    }
+
+    protected virtual void OnMouseUp()
 	{
         _PlayEng();
-
     }
 
-    void OnEngVoiceEnd() {
+    protected virtual void OnEngVoiceEnd() {
 
-        speaker.OnAudioEnd -= OnEngVoiceEnd;
+        _speaker.OnAudioEnd -= OnEngVoiceEnd;
     }
 }

@@ -6,22 +6,28 @@ using UnityEngine.UI;
 public class eng_show : MonoBehaviour {
     public Text _engText;
 
-	// Use this for initialization
-	void Start () {
-        gameObject.SetActive(false);
+    // Use this for initialization
+    private void Awake()
+    {
+        enabled = false;
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    private void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update () {
 		
 	}
 
     public void ShowText(string content){
         _engText.text = content;
-        gameObject.SetActive(true);
+        enabled = true;
     }
 
     public void HideText() {
-        gameObject.SetActive(false);
+        enabled = false;
     }
 }

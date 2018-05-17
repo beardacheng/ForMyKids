@@ -93,7 +93,6 @@ public class eng_voice : MonoBehaviour {
 
     private IEnumerator _RequestAudioByWebRequestInPC(string path)
     {
-        Debug.Log(path);
         using (var audio_clip_request = UnityWebRequest.Get(path))
         {
             yield return audio_clip_request.SendWebRequest();

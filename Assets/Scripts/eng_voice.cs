@@ -52,6 +52,7 @@ public class eng_voice : MonoBehaviour {
 
     public IEnumerator _PlayEng(string content)
     {
+        Debug.Log("play eng: " + content);
         AudioSource audioSrouce = this._audioSource;
         audioSrouce.clip = null;
         audioSrouce.Stop();
@@ -68,6 +69,8 @@ public class eng_voice : MonoBehaviour {
 
         if (audioFilePath == "") {
             var path = "https://fanyi.baidu.com/gettts?lan=en&text=" + sentence + "&spd=3";
+            Debug.Log("load voice remote: " + path);
+
 #if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
             yield return _RequestAudioByWebRequestInPC(path);
 #else
@@ -75,7 +78,9 @@ public class eng_voice : MonoBehaviour {
 #endif
         }
         else {
-            yield return _RequestAudioByWebRequest("file://" + audioFilePath, AudioType.WAV);
+            var path = "file://" + audioFilePath;
+            Debug.Log("load voice in cache: " + path);
+            yield return _RequestAudioByWebRequest(path, AudioType.WAV);
         }
 
         if (audioSrouce.clip != null) {
@@ -93,13 +98,11 @@ public class eng_voice : MonoBehaviour {
     }
 
     private IEnumerator _RequestAudioByWebRequest(string path, AudioType type = AudioType.MPEG) {
-        Debug.Log(path);
         using (var audio_clip_request = UnityWebRequestMultimedia.GetAudioClip(path, type))
         {
             yield return audio_clip_request.SendWebRequest();
             if (audio_clip_request.isNetworkError || audio_clip_request.isHttpError)
             {
-                Debug.Log(path);
                 Debug.LogError(audio_clip_request.error);
                 yield break;
             }

@@ -16,6 +16,5 @@ public class single_market : MonoBehaviour {
 
     public void ShowMarket() {
         this.gameObject.SetActive(true);
-        this.gameObject.transform.SetAsLastSibling();
     }
 }

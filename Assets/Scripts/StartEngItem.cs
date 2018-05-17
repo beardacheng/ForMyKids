@@ -8,7 +8,6 @@ public class StartEngItem : eng_item {
     protected override void Start () {
         base.Start();
         GetComponent<PolygonCollider2D>().enabled = false;
-
         base._PlayEng();
     }
 

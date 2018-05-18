@@ -14,6 +14,8 @@ public class eng_show : MonoBehaviour {
         }
     }
 
+    private bool _isPlaying = false;
+
     // Use this for initialization
     private void Awake()
     {
@@ -30,10 +32,11 @@ public class eng_show : MonoBehaviour {
 		
 	}
 
-    public void ShowText(string content){
+    public void PlayStart(string content){
         _engText.text = content;
-        _image.raycastTarget = true;
         gameObject.SetActive(true);
+
+        _isPlaying = true;
     }
 
     public void HideText() {
@@ -42,6 +45,10 @@ public class eng_show : MonoBehaviour {
     }
 
     public void PlayEnd() {
-        _image.raycastTarget = false;
+        _isPlaying = false;
+    }
+
+    private void OnMouseUp() {
+        if (!_isPlaying) HideText();
     }
 }

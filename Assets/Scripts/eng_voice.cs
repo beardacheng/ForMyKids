@@ -78,7 +78,7 @@ public class eng_voice : MonoBehaviour {
             }
 
             _current = item;
-            if (_engShow) _engShow.ShowText(content);
+            if (_engShow) _engShow.PlayStart(content);
             _audioSource.Play();
             _playAudio = StartCoroutine(DelayedCallback(_audioSource.clip.length));
         }

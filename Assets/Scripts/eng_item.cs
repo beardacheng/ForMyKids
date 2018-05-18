@@ -10,6 +10,8 @@ public class eng_item : MonoBehaviour {
     [Multiline]
     public string eng;
 
+    public bool autoHideText = false;
+
     protected virtual void Start()
     {
         _speaker = FindSpeaker();
@@ -22,7 +24,7 @@ public class eng_item : MonoBehaviour {
 
     protected void _PlayEng()
     {
-        _speaker.PlayEng(eng);
+        _speaker.PlayEng(this);
         _speaker.OnAudioEnd += OnEngVoiceEnd;
     }
 

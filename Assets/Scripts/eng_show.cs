@@ -5,12 +5,18 @@ using UnityEngine.UI;
 
 public class eng_show : MonoBehaviour {
     public Text _engText;
-    private Image _image;
+
+    private Image __image;
+    private Image _image {
+        get {
+            if (__image == null) __image = gameObject.GetComponent<Image>();
+            return __image;
+        }
+    }
 
     // Use this for initialization
     private void Awake()
     {
-        _image = gameObject.GetComponent<Image>();
         gameObject.SetActive(false);
     }
 

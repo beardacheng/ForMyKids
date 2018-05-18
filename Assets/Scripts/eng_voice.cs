@@ -8,9 +8,6 @@ using System.IO;
 
 [RequireComponent(typeof(AudioSource))]
 public class eng_voice : MonoBehaviour {
-    [Multiline]
-    public string sentence = "";
-
     public eng_show _engShow = null;
 
     private AudioSource _audioSource = null;
@@ -22,6 +19,8 @@ public class eng_voice : MonoBehaviour {
     //audio cache
     private static LocalBinFileCache _cache;
 
+    private eng_item _current;
+
     //co
     Coroutine _playAudio;
 
@@ -32,43 +31,33 @@ public class eng_voice : MonoBehaviour {
         OnAudioEnd += OnAudioEndEvent;
     }
 
-    IEnumerator Start()
-    {
-        //auto play
-        if (this._audioSource.playOnAwake && this.sentence != "")
-        {
-            yield return this._PlayEng(this.sentence);
-        }
-    }
 
     private void OnAudioEndEvent() {
         if (_engShow) _engShow.PlayEnd();
-    }
 
-    public void PlayEng(string content)
-    {
-        StartCoroutine(this._PlayEng(content));
-    }
-
-    public IEnumerator _PlayEng(string content)
-    {
-        Debug.Log("play eng: " + content);
-        AudioSource audioSrouce = this._audioSource;
-        audioSrouce.clip = null;
-        audioSrouce.Stop();
-
-        if (null != _playAudio) StopCoroutine(_playAudio);
-
-        if (content == "")
-        {
-            if (sentence == "") yield break;
+        if (_current) {
+            if (_current.autoHideText) _engShow.HideText();
         }
-        else sentence = content;
+    }
 
-        string audioFilePath = _cache.GetFilePath(sentence);
+    public void PlayEng(eng_item item)
+    {
+        StartCoroutine(this._PlayEng(item));
+    }
+
+    public IEnumerator _PlayEng(eng_item item)
+    {
+        string content = item.eng;
+        Debug.Log("play eng: " + content);
+
+        if (content == "") yield break;
+
+        StopPlay();
+
+        string audioFilePath = _cache.GetFilePath(content);
 
         if (audioFilePath == "") {
-            var path = "https://fanyi.baidu.com/gettts?lan=en&text=" + sentence + "&spd=3";
+            var path = "https://fanyi.baidu.com/gettts?lan=en&text=" + content + "&spd=3";
             Debug.Log("load voice remote: " + path);
 
 #if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
@@ -83,17 +72,15 @@ public class eng_voice : MonoBehaviour {
             yield return _RequestAudioByWebRequest(path, AudioType.WAV);
         }
 
-        if (audioSrouce.clip != null) {
+        if (_audioSource.clip != null) {
             if ("" == audioFilePath) {
-                _cache.Save(sentence,  T_AudioClipToByteArray.AudioClipToByteArray(audioSrouce.clip) , false);
+                _cache.Save(content,  T_AudioClipToByteArray.AudioClipToByteArray(_audioSource.clip) , false);
             }
 
-            if (this._engShow)
-            {
-                this._engShow.ShowText(this.sentence);
-            }
-            audioSrouce.Play();
-            _playAudio = StartCoroutine(DelayedCallback(audioSrouce.clip.length));
+            _current = item;
+            if (_engShow) _engShow.ShowText(content);
+            _audioSource.Play();
+            _playAudio = StartCoroutine(DelayedCallback(_audioSource.clip.length));
         }
     }
 
@@ -107,7 +94,7 @@ public class eng_voice : MonoBehaviour {
                 yield break;
             }
 
-            this._audioSource.clip = DownloadHandlerAudioClip.GetContent(audio_clip_request);
+            _audioSource.clip = DownloadHandlerAudioClip.GetContent(audio_clip_request);
         }
     }
 
@@ -122,23 +109,29 @@ public class eng_voice : MonoBehaviour {
                 yield break;
             }
 
-            this._audioSource.clip = NAudioPlayer.FromMp3Data(audio_clip_request.downloadHandler.data);
+            _audioSource.clip = NAudioPlayer.FromMp3Data(audio_clip_request.downloadHandler.data);
 
         }
     }
 
     private IEnumerator DelayedCallback(float time)  
-    {  
+    {
         yield return new WaitForSeconds (time);
         _playAudio = null;
         if (OnAudioEnd != null) {
             OnAudioEnd();
         }
+
+        StopPlay();
     } 
 
     public void StopPlay(){
-        if (_audioSource) _audioSource.Stop();
-        HideText();
+        if (null != _playAudio) StopCoroutine(_playAudio);
+
+        if (_audioSource.clip) _audioSource.Stop();
+        _audioSource.clip = null;
+
+        _current = null;
     }
 
     public void HideText() {

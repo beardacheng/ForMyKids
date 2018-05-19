@@ -17,8 +17,11 @@ public class eng_show : MonoBehaviour {
     private bool _isPlaying = false;
 
     // Use this for initialization
-    private void Awake()
-    {
+    private void Awake() {
+        var boxCollider = GetComponent<BoxCollider2D>();
+        if (boxCollider) {
+            boxCollider.size = new Vector2(Screen.width, Screen.height);
+        }
         gameObject.SetActive(false);
     }
 

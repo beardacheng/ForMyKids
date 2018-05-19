@@ -11,7 +11,16 @@ public class single_market : MonoBehaviour {
         }
     }
 
+    [SerializeField]
+    protected List<string> _itemNames;
+
     private void Awake() {
+        _itemNames = new List<string>();
+        foreach (Transform trans in gameObject.transform) {
+            _itemNames.Add(trans.name);
+        }
+
+
         gameObject.SetActive(false);
     }
 
@@ -31,5 +40,14 @@ public class single_market : MonoBehaviour {
 
     public void Hide() {
         gameObject.SetActive(false);
+    }
+
+    public void ClickItem(string name) {
+        _itemNames.Remove(name);
+
+        if (_itemNames.Count == 0) {
+            GameObject.FindGameObjectWithTag("MarketController").GetComponent<find_in_market>().NextMarket();
+            GameObject.Find("Eng Speaker").GetComponent<eng_voice>().HideText();
+        }
     }
 }

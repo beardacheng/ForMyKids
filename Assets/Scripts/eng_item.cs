@@ -12,6 +12,12 @@ public class eng_item : MonoBehaviour {
 
     public bool autoHideText = false;
 
+    protected single_market singleMarket;
+
+    private void Awake() {
+        singleMarket = GetComponentInParent<single_market>();
+    }
+
     protected virtual void Start()
     {
         _speaker = FindSpeaker();
@@ -34,6 +40,7 @@ public class eng_item : MonoBehaviour {
     }
 
     protected virtual void OnEngVoiceEnd() {
+        singleMarket.ClickItem(name);
 
         _speaker.OnAudioEnd -= OnEngVoiceEnd;
     }

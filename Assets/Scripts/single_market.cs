@@ -11,6 +11,8 @@ public class single_market : MonoBehaviour {
         }
     }
 
+    public string engItemTemplate = "";
+
     [SerializeField]
     protected List<string> _itemNames;
 
@@ -48,6 +50,17 @@ public class single_market : MonoBehaviour {
         if (_itemNames.Count == 0) {
             GameObject.FindGameObjectWithTag("MarketController").GetComponent<find_in_market>().NextMarket();
             GameObject.Find("Eng Speaker").GetComponent<eng_voice>().HideText();
+        }
+    }
+
+    [ContextMenu("SetEngItems")]
+    void SetEngItems() {
+        Debug.Log("Exec SetEngItems");
+
+        if (string.IsNullOrEmpty(engItemTemplate)) return;
+
+        foreach (var item in gameObject.GetComponentsInChildren<eng_item>()) {
+            item.eng = string.Format(engItemTemplate, item.gameObject.name);
         }
     }
 }

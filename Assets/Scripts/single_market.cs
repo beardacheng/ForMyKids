@@ -63,4 +63,8 @@ public class single_market : MonoBehaviour {
             item.eng = string.Format(engItemTemplate, item.gameObject.name);
         }
     }
+
+    public void OnEditorClick() {
+        GameObject.FindGameObjectWithTag("MarketController").GetComponent<find_in_market>().EditorSetNow(transform.GetSiblingIndex());
+    }
 }

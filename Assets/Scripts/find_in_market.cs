@@ -6,7 +6,16 @@ using UnityEngine;
 public class find_in_market : MonoBehaviour {
     public single_market[] markets;
 
-    public int now = 0;
+    private int _now = 0;
+    public int now {
+        get {
+            return _now;
+        }
+        set {
+            if (value >= 0 && value < markets.Length) _now = value;
+        }
+    }
+
     public single_market AtMarket
     {
         get {
@@ -44,15 +53,20 @@ public class find_in_market : MonoBehaviour {
     }
 
 #if UNITY_EDITOR
-    void OnValidate() {
-        if (now < 0 || now >= markets.Length) return;
-
-        foreach (var m in markets)
-        {
+    void FlushMarketInEdtor() {
+        foreach (var m in markets) {
             string sortingLayerName = "DisabledMarket";
             if (AtMarket == m) sortingLayerName = "EnabledMarket";
             m.GetComponent<SpriteRenderer>().sortingLayerName = sortingLayerName;
         }
+    }
+    void OnValidate() {
+        FlushMarketInEdtor();
+    }
+
+    public void EditorSetNow(int now) {
+        this.now = now;
+        FlushMarketInEdtor();
     }
 
 #endif

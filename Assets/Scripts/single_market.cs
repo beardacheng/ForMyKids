@@ -16,6 +16,12 @@ public class single_market : MonoBehaviour {
     [SerializeField]
     protected List<string> _itemNames;
 
+    private find_in_market marketController {
+        get {
+            return GameObject.FindGameObjectWithTag("MarketController").GetComponent<find_in_market>();
+        }
+    }
+
     private void Awake() {
         _itemNames = new List<string>();
         foreach (Transform trans in gameObject.transform) {
@@ -48,7 +54,7 @@ public class single_market : MonoBehaviour {
         _itemNames.Remove(name);
 
         if (_itemNames.Count == 0) {
-            GameObject.FindGameObjectWithTag("MarketController").GetComponent<find_in_market>().NextMarket();
+            marketController.GetComponent<find_in_market>().NextMarket();
             GameObject.Find("Eng Speaker").GetComponent<eng_voice>().HideText();
         }
     }
@@ -65,6 +71,6 @@ public class single_market : MonoBehaviour {
     }
 
     public void OnEditorClick() {
-        GameObject.FindGameObjectWithTag("MarketController").GetComponent<find_in_market>().EditorSetNow(transform.GetSiblingIndex());
+        marketController.EditorSetNow(transform.GetSiblingIndex());
     }
 }

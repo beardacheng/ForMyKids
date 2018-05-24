@@ -57,7 +57,11 @@ public class find_in_market : MonoBehaviour {
         foreach (var m in markets) {
             string sortingLayerName = "DisabledMarket";
             if (AtMarket == m) sortingLayerName = "EnabledMarket";
+
             m.GetComponent<SpriteRenderer>().sortingLayerName = sortingLayerName;
+            foreach (var r in m.GetComponentsInChildren<SpriteRenderer>()) {
+                r.sortingLayerName = sortingLayerName;
+            }
         }
     }
     void OnValidate() {

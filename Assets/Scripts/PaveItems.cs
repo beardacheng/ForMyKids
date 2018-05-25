@@ -12,7 +12,7 @@ public class PaveItems : MonoBehaviour {
     private int _lastLineCount;
     private int _thisLineCount;
     private int _lineNo;
-    private bool _paved = false;
+    private bool _paved;
 
 	// Use this for initialization
 	void Start () {
@@ -27,6 +27,7 @@ public class PaveItems : MonoBehaviour {
 
     [ContextMenu("TogglePave")]
     private void TogglePave() {
+        _paved = gameObject.transform.childCount > 1;
         if (!_paved) {
             Pave();
             _paved = true;
@@ -34,7 +35,14 @@ public class PaveItems : MonoBehaviour {
         else {
             DePave();
             _paved = false;
+            InitCount();
         }
+    }
+
+    private void InitCount() {
+        _lastLineCount = -1;
+        _thisLineCount = 1;
+        _lineNo = 1;
     }
 
     private void DePave() {
@@ -43,15 +51,12 @@ public class PaveItems : MonoBehaviour {
         }
     }
 
-
     private void Pave() {
         _collider = GetComponent<Collider2D>();
         _lastItem = startItem;
         _lineStartItem = startItem;
 
-        _lastLineCount = -1;
-        _thisLineCount = 1;
-        _lineNo = 1;
+        InitCount();
 
         while(true) {
             if (!_PlaceNext()) break;

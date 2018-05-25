@@ -122,7 +122,6 @@ public class WitGotSick : MonoBehaviour {
         PlayEng(texts["t_2"].text);
         yield return null;
 
-point:
         objs["car"].gameObject.SetActive(true);
         objs["hospital"].gameObject.SetActive(true);
         iTween.MoveTo(objs["car"], iTweetCallback(iTween.Hash("x", objs["hospital"].transform.position.x, "time", 1.5f, "easetype", "easeOutQuart")));
@@ -130,14 +129,69 @@ point:
         yield return null;
         
         Clean();
+    
         objs["doctor"].gameObject.SetActive(true);
         texts["t_3"].gameObject.SetActive(true);
         PlayEng(texts["t_3"].text);
         yield return null;
 
-        objs["s_2"].gameObject.SetActive(true);
         texts["t_4"].gameObject.SetActive(true);
         PlayEng(texts["t_4"].text);
+        yield return null;
+
+        objs["s_2"].gameObject.SetActive(true);
+        _isWaitingForClick = true;
+        yield return null;
+
+        Clean();
+        texts["t_5"].gameObject.SetActive(true);
+        PlayEng(texts["t_5"].text);
+        yield return new WaitForSeconds(1.0f);
+
+        objs["mouth"].gameObject.SetActive(true);
+        texts["mouth"].gameObject.SetActive(true);
+        PlayEng("mouth");
+        yield return new WaitForSeconds(1.0f);
+
+        objs["chest"].gameObject.SetActive(true);
+        texts["chest"].gameObject.SetActive(true);
+        PlayEng("chest");
+        yield return new WaitForSeconds(1.0f);
+
+        objs["thermometer"].gameObject.SetActive(true);
+        texts["temperature"].gameObject.SetActive(true);
+        PlayEng(texts["temperature"].text);
+
+        _isWaitingForClick = true;
+        yield return null;
+
+        Clean();
+    
+        objs["wow"].gameObject.SetActive(true);
+        PlayEng("wow!");
+        yield return null;
+
+        texts["t_6"].gameObject.SetActive(true);
+        PlayEng(texts["t_6"].text);
+        yield return null;
+
+        objs["fever"].gameObject.SetActive(true);
+        iTween.FadeFrom(objs["fever"], iTweetCallback(iTween.Hash("alpha", 0.0f, "time", 1)));
+        yield return new WaitForSeconds(0.5f);
+
+        texts["t_7"].gameObject.SetActive(true);
+        PlayEng(texts["t_7"].text);
+        _isWaitingForClick = true;
+
+        Clean();
+point:
+        objs["doctor_1"].gameObject.SetActive(true);
+        texts["t_8"].gameObject.SetActive(true);
+        PlayEng(texts["t_8"].text);
+        yield return null;
+
+        objs["medicine"].gameObject.SetActive(true);
+
         yield break;
     }
 

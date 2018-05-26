@@ -104,6 +104,7 @@ public class WitGotSick : MonoBehaviour {
 
         texts["t_1"].gameObject.SetActive(true);
         PlayEng(texts["t_1"].text);
+        _isWaitingForClick = true;
         yield return null;
 
         Clean();
@@ -164,7 +165,7 @@ public class WitGotSick : MonoBehaviour {
         yield return null;
 
         Clean();
-    point:
+    
         objs["wow"].gameObject.SetActive(true);
         PlayEng("wow!");
         yield return null;
@@ -190,6 +191,26 @@ public class WitGotSick : MonoBehaviour {
         yield return null;
 
         objs["medicine"].gameObject.SetActive(true);
+        iTween.FadeFrom(objs["medicine"], iTweetCallback(iTween.Hash("alpha", 0.0f, "time", 1)));
+        _isWaitingForClick = true;
+        yield return null;
+
+        Clean();
+point:
+        objs["take_medicine"].gameObject.SetActive(true);
+        iTween.FadeFrom(objs["take_medicine"], iTweetCallback(iTween.Hash("alpha", 0.0f, "time", 1)));
+        texts["t_9"].gameObject.SetActive(true);
+        PlayEng(texts["t_9"].text);
+        yield return null;
+
+        yield return new WaitForSeconds(0.5f);
+
+        texts["t_10"].gameObject.SetActive(true);
+        PlayEng(texts["t_10"].text);
+        yield return null;
+
+        objs["feel_better"].gameObject.SetActive(true);
+        iTween.FadeFrom(objs["feel_better"], iTweetCallback(iTween.Hash("alpha", 0.0f, "time", 1)));
 
         yield break;
     }

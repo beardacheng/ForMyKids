@@ -97,7 +97,7 @@ public class WitGotSick : MonoBehaviour {
     }
 
     private IEnumerable Run() {
-        goto point;
+        //goto point;
         objs["s_1"].SetActive(true);
         iTween.FadeFrom(objs["s_1"], iTweetCallback(iTween.Hash("alpha", 0.0f, "time", 2)));
         yield return null;
@@ -129,7 +129,7 @@ public class WitGotSick : MonoBehaviour {
         yield return null;
         
         Clean();
-    
+
         objs["doctor"].gameObject.SetActive(true);
         texts["t_3"].gameObject.SetActive(true);
         PlayEng(texts["t_3"].text);
@@ -137,8 +137,6 @@ public class WitGotSick : MonoBehaviour {
 
         texts["t_4"].gameObject.SetActive(true);
         PlayEng(texts["t_4"].text);
-        yield return null;
-
         objs["s_2"].gameObject.SetActive(true);
         _isWaitingForClick = true;
         yield return null;
@@ -166,7 +164,7 @@ public class WitGotSick : MonoBehaviour {
         yield return null;
 
         Clean();
-    
+    point:
         objs["wow"].gameObject.SetActive(true);
         PlayEng("wow!");
         yield return null;
@@ -182,9 +180,10 @@ public class WitGotSick : MonoBehaviour {
         texts["t_7"].gameObject.SetActive(true);
         PlayEng(texts["t_7"].text);
         _isWaitingForClick = true;
+        yield return null;
 
         Clean();
-point:
+
         objs["doctor_1"].gameObject.SetActive(true);
         texts["t_8"].gameObject.SetActive(true);
         PlayEng(texts["t_8"].text);
